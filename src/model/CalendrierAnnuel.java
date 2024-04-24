@@ -20,10 +20,14 @@ public class CalendrierAnnuel {
 	}
 	
 	public boolean estLibre(int jour, int mois) {
-		return true;
+		return calendrier[mois-1].estLibre(jour-1);
 	}
 	
 	public boolean reserver(int jour, int mois) {
+		if (!calendrier[mois-1].estLibre(jour-1)) {
+			return false;
+		}
+		calendrier[mois-1].reserver(jour-1);
 		return true;
 	}
 	
@@ -42,15 +46,15 @@ public class CalendrierAnnuel {
 		}
 		
 		private boolean estLibre(int jour) {
-			return jours[jour-1];
+			return jours[jour];
 		}
 		
 		private void reserver(int jour) {
-		    if (!estLibre(jour)) {
-		        throw new IllegalStateException("Le jour à réserver n'est pas libre.");
-		    }
-		    jours[jour-1] = false;
+			if(!jours[jour]) {
+				throw new IllegalStateException("Le jour à réserver n'est pas libre.");
+			}
+		    jours[jour] = false;
+		    
 		}
-		
 	}
 }
